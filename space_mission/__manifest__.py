@@ -13,7 +13,7 @@
     'website': 'www.odoo.com',
     'category': 'Tech Training',
     
-    'depends': ['project','website'],
+    'depends': ['project','website', 'hr'],
     'data': [
         'security/space_mission_groups.xml',
         'security/space_mission_security.xml',

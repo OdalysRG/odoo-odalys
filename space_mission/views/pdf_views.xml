@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
-    <record id="pdf_generator_view_form" model="ir.ui.view">
-        <field name="name">space_mission.pdf_generator.form</field>
+    <record id="pdf_generator_view_list" model="ir.ui.view">
+        <field name="name">space_mission.pdf_generator.list</field>
         <field name="model">space_mission.pdf_generator</field>
         <field name="arch" type="xml">
             <form>
@@ -14,7 +15,7 @@
     </record>
 
     <record id="pdf_generator_view_list" model="ir.ui.view">
-        <field name="name">space_mission.pdf_generator.form</field>
+        <field name="name">space_mission.pdf_generator.list</field>
         <field name="model">space_mission.pdf_generator</field>
         <field name="arch" type="xml">
             <form>
@@ -28,7 +29,8 @@
                     <button name="edit_word" string="Generate PDF" type="object"/>
                 </group>
                 </group>
-                <field name="pdf_file" widget="binary" filename="Testname"/>
+                <field name="word_file"/>
+                <field name="pdf_file" widget="pdf_viewer"/>
             </form>
         </field>
     </record>

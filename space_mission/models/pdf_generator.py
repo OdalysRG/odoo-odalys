@@ -13,11 +13,17 @@ class PDFGenerator(models.Model):
     _name = 'space_mission.pdf_generator'
     _description = 'Space Documents'
 
-    name = fields.Char(string='Nombre del documento')
+    name = fields.Char(string='Name')
+    id = fields.Char(string='Id')
     file_name = fields.Char(string='File name')
-    pdf_file = fields.Binary(string="PDF Document")
-    id = fields.Integer(string='ID', readonly=True)
+    word_file = fields.Binary(string='Word Document')
+    pdf_file = fields.Binary(string='Pdf Word')
+    temp_path = '/tmp/temp-doc.docx'
     _logger = logging.getLogger(__name__)
+
+    employees = fields.Many2one(comodel_name='res.partner',
+                                string='Employee',
+                                required=True)
 
     @api.model
     def generate_pdf_report(self, data):
@@ -27,7 +33,7 @@ class PDFGenerator(models.Model):
         from reportlab.pdfgen import canvas
         buffer = BytesIO()
         pdf = canvas.Canvas(buffer, pagesize=letter)
-        pdf.drawString(100, 750, "Welcome to Odoo PDF Generation:")
+        pdf.drawString(100, 750, 'Welcome to Odoo PDF Generation:')
         pdf.save()
         pdf_data = buffer.getvalue()
         buffer.close()
@@ -40,10 +46,10 @@ class PDFGenerator(models.Model):
             'pdf_data': pdf_base64,
             'file_name': 'my_report.pdf'
         }
-    
+
     def open_pdf_report(self, data):
-        pdf_data = io.BytesIO(self.pdf_file)
-        if self.pdf_file:
+        pdf_data = io.BytesIO(self.word_file)
+        if self.word_file:
             return {
                 'type': 'ir.actions.act_window',
                 'view_mode': 'form',
@@ -66,25 +72,24 @@ class PDFGenerator(models.Model):
                 }
             }
             
-    def convert_to_pdf(docx_path):
-        pdf_path = os.path.splitext(docx_path)[0] + ".pdf"
-        cmd = ["unoconv", "-f", "pdf", "-o", pdf_path, docx_path]
+    def convert_to_pdf(self, docx_path):
+        pdf_path = os.path.splitext(docx_path)[0] + '.pdf'
+        cmd = ['unoconv', '-f', 'pdf', '-o', pdf_path, docx_path]
         subprocess.run(cmd, check=True)
         return pdf_path
 
     def edit_word(self):
         #Variables: fecha, empleador, empleador_email, empleado, empleado_email, puesto, actividades, dias_antes_terminacion_empleador, dias_antes_terminacion_empleado, periodo_empleado, periodo_empleador
-        if self.pdf_file:
+        if self.word_file:
         #    with tempfile.NamedTemporaryFile(delete=False,dir='/tmp',suffix='.docx') as tmp_file:
-        #        tmp_file.write(self.pdf_file)
+        #        tmp_file.write(self.word_file)
         #        docx_path = tmp_file.name.replace('/tmp/','')
         #        if os.path.exists('/tmp/'+docx_path):
-            decoded_data = base64.b64decode(self.pdf_file)
+            decoded_data = base64.b64decode(self.word_file)
             doc = Document(BytesIO(decoded_data))
-            temp_path = 'tmp/temp-doc.docx'
-            doc.save(temp_path)
+            doc.save(self.temp_path)
             try:
-                doc = DocxTemplate(os.path.join(temp_path))
+                doc = DocxTemplate(os.path.join(self.temp_path))
                 context = {'fecha' : '7 de marzo, 2023',
                             'empleador':'William Pech',
                             'empleado':'Mario León',
@@ -97,13 +102,26 @@ class PDFGenerator(models.Model):
                             'periodo_empleado':'4',
                             'periodo_empleador':'5'}
             except Exception as e:
-                self._logger.error(f"Error al crear el documento: {e}")
+                self._logger.error(f'Error al crear el documento: {e}')
             doc.render(context)
-            doc.save(temp_path.replace('temp-doc.docx','result.docx'))
-            pdf_path = self.convert_to_pdf(temp_path.replace('temp-doc.docx','result.docx'))
+            doc.save(self.temp_path.replace('temp-doc.docx','result.docx'))
+            pdf_path = self.convert_to_pdf(self.temp_path.replace('temp-doc.docx','result.docx'))
             print(pdf_path)
+            if self.pdf_file:
+                with open(pdf_path, 'rb') as file:
+                    pdf_contents = bytes(file.read())
+                    pdf_data = base64.b64encode(pdf_contents)
+                my_record = self.env['space_mission.pdf_generator'].search([('id','=',1)])
+                my_record.write({'pdf_file':False})
+                my_record.write({'pdf_file':pdf_data})
+            else:
+                with open(pdf_path, 'rb') as file:
+                    pdf_contents = bytes(file.read())
+                    pdf_data = base64.b64encode(pdf_contents)
+                my_record = self.env['space_mission.pdf_generator'].search([('id','=',1)])
+                my_record.write({'pdf_file':pdf_data})
                 #else:
-                #    self._logger.info("Archivo no encontrado")
+                #    self._logger.info('Archivo no encontrado')
         else:
-            self._logger.info("Upload a document1")
-        return self._logger.info("Finish")
+            self._logger.info('Upload a document1')
+        return self._logger.info('Finish')

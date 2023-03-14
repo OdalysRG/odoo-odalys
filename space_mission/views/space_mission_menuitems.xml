@@ -20,15 +20,13 @@
             </p>
         </field>
     </record>
-    <record id="action_pdf_generator" model="ir.actions.act_window">
-            <field name="name">PDF Generator</field>
-            <field name="res_model">space_mission.pdf_generator</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Click here to create a new PDF report
-                </p>
-            </field>
+    <record id="action_space_mission_employees" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">space_mission.pdf_generator</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create</p>
+        </field>
     </record>
 
     
@@ -47,6 +45,6 @@
               action="spaceship_list_action"/>
 
     <menuitem id="menu_space_mission_pdf_generator" name="PDF Generator" parent="menu_space_mission_sub"
-            action="action_pdf_generator"
+            action="action_space_mission_employees"
             sequence="5"/>
 </odoo>
