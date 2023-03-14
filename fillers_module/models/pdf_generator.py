@@ -12,8 +12,8 @@ import logging
 class PDFGenerator(models.Model):
     _name = 'fillers_module.pdf_generator'
     _description = 'Filler Documents'
-
-    name = fields.Char(string='Name')
+    
+    name = fields.Char(string="Employee", related='employees.name')
     id = fields.Char(string='Id')
     file_name = fields.Char(string='File name')
     word_file = fields.Binary(string='Word Document')

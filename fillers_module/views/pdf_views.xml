@@ -14,6 +14,8 @@
         </field>
     </record>
 
+    
+
     <record id="pdf_generator_view_list" model="ir.ui.view">
         <field name="name">fillers_module.pdf_generator.list</field>
         <field name="model">fillers_module.pdf_generator</field>
@@ -21,7 +23,7 @@
             <form>
                 <group>
                     <group>
-                    <field name="name"/>
+                    <field name="employees"/>
                     <field name="id"/>
                 </group>
                 <group>
