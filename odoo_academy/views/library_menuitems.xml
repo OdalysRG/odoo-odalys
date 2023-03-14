@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="book_list_action">
+            <field name="name">Book Collection</field>
+            <field name="res_model">book.collection</field>
+            <field name="view_mode">tree,form,pivot</field>
+             <field name="help" type="html">
+                 <p class="o_view_nocontent_smiling_face" >
+                     
+                     Add a book!
+                </p>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="rental_list_action">
+            <field name= "name">Book Rental</field>
+            <field name= "res_model">book.rental</field>
+            <field name= "view_mode">tree,form,calendar,map</field>
+            <field name= "help" type="html">
+                <p class="o_view_nocontent_smiling_face" >
+                    
+                    Rent a book!
+
+                </p>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="customer_list_action">
+            <field name= "name">Customer Rental</field>
+            <field name= "res_model">res.partner</field>
+            <field name= "view_mode">tree,form</field>
+            <field name= "help" type="html">
+                <p class="o_view_nocontent_smiling_face" >
+                    
+                    Customers
+
+                </p>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="book_copies_list_action">
+        <field name= "name">Book Copies</field>
+        <field name= "res_model">book.copies</field>
+        <field name= "view_mode">tree,form</field>
+        <field name= "help" type="html">
+            <p class="o_view_nocontent_smiling_face" >
+                
+                Book Copies
+
+            </p>
+        </field>
+    </record>
+
+
+        <menuitem name="Odoo Library"
+                  id="menu_library"
+                  sequence="1" 
+                  web_icon="odoo_academy,static/description/books.png"/>
+        
+     <menuitem id="menu_library_sub" name="Book Collection" parent="menu_library" sequence="2"
+               action="book_list_action"/>
+        
+        
+    <menuitem id="menu_customer_sub" name="Customers" parent="menu_library" sequence="3"
+               action="customer_list_action"/>
+        
+    
+    <menuitem id="menu_rentals_sub" name="Rental Module" parent="menu_library" sequence="4"
+              action="rental_list_action"/>
+        
+        
+    <menuitem id="menu_copies_sub" name="Book Copies" parent="menu_library" sequence="5"
+              action="book_copies_list_action"/>
+
+        
+    <menuitem id="menu_selection_sub" name="Selection" parent="menu_library" sequence="6"/>
+        
+        <menuitem id="menu_book_selection" name="Book Selection" parent="menu_selection_sub" sequence="7"
+                  action="action_book_selection_wizard"/>
+        
+
+        
+    </data>
+</odoo>

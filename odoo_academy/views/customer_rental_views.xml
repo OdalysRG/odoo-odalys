@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        
+        <record model="ir.ui.view" id="view_partner_tree_list_inherit_library"> 
+            <field name="name">customer.rental.tree.inherit.library</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="replace">
+                    <field name="user_id" invisible="1"/>
+                </field>
+                <xpath expr="//field[@name='activity_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+                </xpath> 
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_form_inherit_library">
+            <field name= "name">customer.rental.form.inherit.library</field>
+            <field name= "model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name= "arch" type="xml">
+                <form string= "Partners">
+                    <sheet>
+                        <notebook>
+                        <page string= "Book Rental">
+                            <field name="rentalcus_ids"/>
+                        </page>  
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
