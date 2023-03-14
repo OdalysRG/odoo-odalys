@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_pdf_generator_admin,pdf_generator admin,fillers_module.model_fillers_module_pdf_generator,fillers_module_admin,1,1,1,1
+access_pdf_generator_employees,pdf_generator employees,fillers_module.model_fillers_module_pdf_generator,fillers_module_employees,1,1,1,0
+access_pdf_generator_general,pdf_generator general,fillers_module.model_fillers_module_pdf_generator,fillers_module_general,1,0,0,0
+

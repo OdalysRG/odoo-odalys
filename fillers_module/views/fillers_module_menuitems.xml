@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_fillers_module_employees" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">fillers_module.pdf_generator</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create</p>
+        </field>
+    </record>
+
+    
+    <!-- We use the web_icon attribute to assign the icon to the Menu Item in the App Launcher -->
+    <menuitem name="Contract Filler"
+              id="menu_fillers_module"
+              web_icon="fillers_module,static/description/icon.png"
+              sequence="1"/>
+
+    <menuitem id="menu_fillers_module_sub" name="Contract Filler" parent="menu_fillers_module" sequence="2"/>
+
+    <menuitem id="menu_fillers_module_pdf_generator" name="PDF Generator" parent="menu_fillers_module"
+            action="action_fillers_module_employees"
+            sequence="5"/>
+</odoo>

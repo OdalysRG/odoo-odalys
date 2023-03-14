@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="pdf_generator_view_list" model="ir.ui.view">
+        <field name="name">fillers_module.pdf_generator.list</field>
+        <field name="model">fillers_module.pdf_generator</field>
+        <field name="arch" type="xml">
+            <form>
+                <tree string="PDF Form">
+                    <field name="name"/>
+                    <field name="id"/>
+                </tree>
+            </form>
+        </field>
+    </record>
+
+    <record id="pdf_generator_view_list" model="ir.ui.view">
+        <field name="name">fillers_module.pdf_generator.list</field>
+        <field name="model">fillers_module.pdf_generator</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                    <field name="name"/>
+                    <field name="id"/>
+                </group>
+                <group>
+                    <field name="file_name"/>
+                    <button name="edit_word" string="Generate PDF" type="object"/>
+                </group>
+                </group>
+                <field name="word_file"/>
+                <field name="pdf_file" widget="pdf_viewer"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>
