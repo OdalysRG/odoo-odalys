@@ -12,18 +12,19 @@ import logging
 class PDFGenerator(models.Model):
     _name = 'fillers_module.pdf_generator'
     _description = 'Filler Documents'
+    _inherits = {'res.partner': 'employees'}
     
     name = fields.Char(string="Employee", related='employees.name')
     id = fields.Char(string='Id')
     file_name = fields.Char(string='File name')
     word_file = fields.Binary(string='Word Document')
-    pdf_file = fields.Binary(string='Pdf Word')
+    pdf_file = fields.Binary(string='Pdf Word', readonly=True)
     temp_path = '/tmp/temp-doc.docx'
     _logger = logging.getLogger(__name__)
 
-    employees = fields.Many2one(comodel_name='res.partner',
-                                string='Employee',
-                                required=True)
+    employees = fields.Many2one(comodel_name='res.partner', string='Employee', required=True)
+    
+    employer = fields.Many2one(comodel_name='res.partner', string='Employer', required=True)
 
     @api.model
     def generate_pdf_report(self, data):
@@ -91,10 +92,10 @@ class PDFGenerator(models.Model):
             try:
                 doc = DocxTemplate(os.path.join(self.temp_path))
                 context = {'fecha' : '7 de marzo, 2023',
-                            'empleador':'William Pech',
-                            'empleado':'Mario León',
-                            'empleador_email':'wpech@test.com',
-                            'empleado_email':'mleon@test.com',
+                            'empleador':self.employer.name,
+                            'empleado':self.employees.name,
+                            'empleador_email':self.employer.email,
+                            'empleado_email':self.employees.email,
                             'puesto':'Developer',
                             'actividades':'Desarrollador de Python para Odoo',
                             'dias_antes_terminacion_empleador':'14',
@@ -106,20 +107,21 @@ class PDFGenerator(models.Model):
             doc.render(context)
             doc.save(self.temp_path.replace('temp-doc.docx','result.docx'))
             pdf_path = self.convert_to_pdf(self.temp_path.replace('temp-doc.docx','result.docx'))
-            print(pdf_path)
             if self.pdf_file:
                 with open(pdf_path, 'rb') as file:
                     pdf_contents = bytes(file.read())
                     pdf_data = base64.b64encode(pdf_contents)
-                my_record = self.env['fillers_module.pdf_generator'].search([('id','=',1)])
+                my_record = self.env['fillers_module.pdf_generator'].search([('id','=',self.id)])
                 my_record.write({'pdf_file':False})
                 my_record.write({'pdf_file':pdf_data})
+                print(self.id)
             else:
                 with open(pdf_path, 'rb') as file:
                     pdf_contents = bytes(file.read())
                     pdf_data = base64.b64encode(pdf_contents)
-                my_record = self.env['fillers_module.pdf_generator'].search([('id','=',1)])
+                my_record = self.env['fillers_module.pdf_generator'].search([('id','=',self.id)])
                 my_record.write({'pdf_file':pdf_data})
+                print(self.id)
                 #else:
                 #    self._logger.info('Archivo no encontrado')
         else:

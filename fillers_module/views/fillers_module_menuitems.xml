@@ -9,6 +9,19 @@
         </field>
     </record>
 
+    <record model="ir.actions.act_window" id="customer_list_action">
+        <field name= "name">Employees</field>
+        <field name= "res_model">res.partner</field>
+        <field name= "view_mode">tree,form</field>
+        <field name= "help" type="html">
+            <p class="o_view_nocontent_smiling_face" >
+                
+                Customers
+
+            </p>
+        </field>
+    </record>
+
     
     <!-- We use the web_icon attribute to assign the icon to the Menu Item in the App Launcher -->
     <menuitem name="Contract Filler"
@@ -18,7 +31,12 @@
 
     <menuitem id="menu_fillers_module_sub" name="Contract Filler" parent="menu_fillers_module" sequence="2"/>
 
+    <menuitem id="menu_fillers_employee_list" name="Employees" parent="menu_fillers_module"
+            action="customer_list_action"
+            sequence="5"/>
+
     <menuitem id="menu_fillers_module_pdf_generator" name="PDF Generator" parent="menu_fillers_module"
             action="action_fillers_module_employees"
-            sequence="5"/>
+            sequence="6"/>
+
 </odoo>

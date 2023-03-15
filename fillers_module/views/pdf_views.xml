@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <record id="pdf_generator_view_list" model="ir.ui.view">
-        <field name="name">fillers_module.pdf_generator.list</field>
+
+    <record id="pdf_generator_view_form" model="ir.ui.view">
+        <field name="name">fillers_module.pdf_generator.form</field>
         <field name="model">fillers_module.pdf_generator</field>
         <field name="arch" type="xml">
             <form>
-                <tree string="PDF Form">
-                    <field name="name"/>
-                    <field name="id"/>
-                </tree>
-            </form>
-        </field>
-    </record>
-
-    
-
-    <record id="pdf_generator_view_list" model="ir.ui.view">
-        <field name="name">fillers_module.pdf_generator.list</field>
-        <field name="model">fillers_module.pdf_generator</field>
-        <field name="arch" type="xml">
-            <form>
-                <group>
+                <sheet>
+                    <h1><field name="name"/></h1>
                     <group>
-                    <field name="employees"/>
-                    <field name="id"/>
-                </group>
-                <group>
-                    <field name="file_name"/>
-                    <button name="edit_word" string="Generate PDF" type="object"/>
-                </group>
-                </group>
-                <field name="word_file"/>
-                <field name="pdf_file" widget="pdf_viewer"/>
+                        <group>
+                        <field name="employees"/>
+                        <field name="id"/>
+                    </group>
+                    <group>
+                        <field name="employer"/>
+                        <field name="file_name"/>
+                        <button name="edit_word" string="Generate PDF" type="object" class="oe_highlight" 
+                        icon="fa-file-text-o"/>
+                    </group>
+                    </group>
+                    <field name="word_file"/>
+                    <field name="pdf_file" widget="pdf_viewer"/>
+                </sheet>
             </form>
         </field>
     </record>
+
+    <record model ="ir.ui.view" id="pdf_view_list">
+        <field name= "name">pdf.view.list</field>
+        <field name= "model">fillers_module.pdf_generator</field>
+        <field name= "arch" type="xml">
+            <tree string= "PDF Generator List" class="text-center">
+                <field name="employees" class="font-weight-bold"/>
+                <field name="file_name"/>
+                <field name="employer"/>
+                <field name="id"/>
+            </tree>
+        </field>
+    </record>
+
 
 </odoo>

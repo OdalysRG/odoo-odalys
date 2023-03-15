@@ -22,6 +22,7 @@
         'security/ir.model.access.csv',
         'views/fillers_module_menuitems.xml',
         'views/pdf_views.xml',
+        'views/employees_views.xml',
     ],
     
      'assets': {},
