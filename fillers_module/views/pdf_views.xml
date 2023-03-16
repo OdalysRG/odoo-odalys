@@ -28,16 +28,15 @@
         </field>
     </record>
 
-    <record model ="ir.ui.view" id="pdf_view_list">
-        <field name= "name">pdf.view.list</field>
+    <record model ="ir.ui.view" id="pdf_view_form">
+        <field name= "name">pdf.view.form</field>
         <field name= "model">fillers_module.pdf_generator</field>
         <field name= "arch" type="xml">
-            <tree string= "PDF Generator List" class="text-center">
+            <form string= "PDF Generator List" class="text-center">
                 <field name="employees" class="font-weight-bold"/>
                 <field name="file_name"/>
                 <field name="employer"/>
-                <field name="id"/>
-            </tree>
+            </form>
         </field>
     </record>
 

@@ -25,8 +25,11 @@ class PDFGenerator(models.Model):
     temp_path = '/tmp/temp-doc.docx'
     _logger = logging.getLogger(__name__)
 
-    employees = fields.Many2one(comodel_name='res.partner', string='Employee', required=True)
+    co_word_file = fields.Binary(string='Word Document') 
+    co_pdf_file = fields.Binary(string='Pdf Document', readonly=True) 
+    employer_ids = fields.Char(comodel_name='res.partner', string='Employeer', required=True)
     
+    employees = fields.Many2one(comodel_name='res.partner', string='Employee', required=True)
     employer = fields.Many2one(comodel_name='res.partner', string='Employer', required=True)
 
     @api.model
