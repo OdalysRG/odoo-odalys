@@ -14,6 +14,9 @@ class PDFGenerator(models.Model):
     _description = 'Filler Documents'
     _inherits = {'res.partner': 'employees'}
     
+    customer_id = fields.Many2one(comodel_name='res.partner', string='Customer')
+
+    
     name = fields.Char(string="Employee", related='employees.name')
     id = fields.Char(string='Id')
     file_name = fields.Char(string='File name')

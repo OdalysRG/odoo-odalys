@@ -23,6 +23,7 @@
         'views/fillers_module_menuitems.xml',
         'views/pdf_views.xml',
         'views/employees_views.xml',
+        'views/employees_table_views.xml'
     ],
     
      'assets': {},
