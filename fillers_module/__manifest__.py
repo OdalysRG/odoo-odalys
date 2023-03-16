@@ -20,9 +20,11 @@
     'data': [
         'security/fillers_module_groups.xml',
         'security/ir.model.access.csv',
+        'data/sequence_data.xml',
         'views/fillers_module_menuitems.xml',
         'views/pdf_views.xml',
         'views/employees_views.xml',
+        
     ],
     
      'assets': {},

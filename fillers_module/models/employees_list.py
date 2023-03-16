@@ -8,3 +8,4 @@ class EmployeesList(models.Model):
     _inherit='res.partner'
     
     
+    contracts_ids = fields.One2many (comodel_name='fillers_module.pdf_generator', inverse_name='employees', string='Contract')

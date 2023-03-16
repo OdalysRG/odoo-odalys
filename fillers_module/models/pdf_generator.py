@@ -15,8 +15,12 @@ class PDFGenerator(models.Model):
     _inherits = {'res.partner': 'employees'}
     
     name = fields.Char(string="Employee", related='employees.name')
-    id = fields.Char(string='Id')
-    file_name = fields.Char(string='File name')
+    employee_id = fields.Char(string='Employee ID', required=True, copy=False, readonly=True, 
+                              default=lambda self: _('New'))
+    file_name = fields.Selection(string ='File Name',
+                                 selection = [('contrato por tiempo determinado', 'Contrato por Tiempo Determinado'),
+                                              ('contrato por tiempo indeterminado', 'Contrato por Tiempo Indeterminado'),
+                                              ('otro','Otro')], copy= False, required=True)
     word_file = fields.Binary(string='Word Document')
     pdf_file = fields.Binary(string='Pdf Word', readonly=True)
     temp_path = '/tmp/temp-doc.docx'
@@ -25,6 +29,11 @@ class PDFGenerator(models.Model):
     employees = fields.Many2one(comodel_name='res.partner', string='Employee', required=True)
     
     employer = fields.Many2one(comodel_name='res.partner', string='Employer', required=True)
+    
+    @api.model
+    def create(self, vals):
+        vals['employee_id']= self.env['ir.sequence'].next_by_code('employee.id')
+        return super(PDFGenerator, self).create(vals)
 
     @api.model
     def generate_pdf_report(self, data):
@@ -96,7 +105,7 @@ class PDFGenerator(models.Model):
                             'empleado':self.employees.name,
                             'empleador_email':self.employer.email,
                             'empleado_email':self.employees.email,
-                            'puesto':'Developer',
+                            'puesto':self.employees.function,
                             'actividades':'Desarrollador de Python para Odoo',
                             'dias_antes_terminacion_empleador':'14',
                             'dias_antes_terminacion_empleado':'14',
