@@ -12,7 +12,7 @@
                     <group>
                         <group>
                         <field name="employees"/>
-                        <field name="id"/>
+                        <field name="employee_id"/>
                     </group>
                     <group>
                         <field name="employer"/>
@@ -28,17 +28,28 @@
         </field>
     </record>
 
-    <record model ="ir.ui.view" id="pdf_view_form">
-        <field name= "name">pdf.view.form</field>
+    <record model ="ir.ui.view" id="pdf_view_list">
+        <field name= "name">pdf.view.list</field>
         <field name= "model">fillers_module.pdf_generator</field>
         <field name= "arch" type="xml">
-            <form string= "PDF Generator List" class="text-center">
+            <tree string= "PDF Generator List" class="text-center">
                 <field name="employees" class="font-weight-bold"/>
                 <field name="file_name"/>
                 <field name="employer"/>
-            </form>
+                <field name="employee_id"/>
+            </tree>
         </field>
     </record>
 
-
+    <record model="ir.ui.view" id="pdf_view_search">
+        <field name="name">pdf.view.search</field>
+        <field name="model">fillers_module.pdf_generator</field>
+        <field name="arch" type="xml">
+            <search>
+                 <field name="employees"/>
+                 <field name="employee_id"/>
+                 <field name="file_name"/>
+            </search>
+        </field>
+</record>
 </odoo>
